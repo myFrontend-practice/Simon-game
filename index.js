@@ -3,6 +3,7 @@ var userChosenColor = [] ;
 var level = 0 ;
 var buttonColor = ["green" , "red" , "yellow" , "blue"] ;
 var clickTime = 0 ;
+
 //user click system
 function userClickSystem () {
 
@@ -15,10 +16,9 @@ function userClickSystem () {
             userChosenColor.push(userSelectColor) ;
             pressAnimation(userSelectColor) ;
             colorSound(userSelectColor) ;
-        
-            console.log(userChosenColor) ;
 
             clickTime++ ;
+
             //ckeck answer after click 
             if (clickTime > 0) {
                 checkAnwser (level) ;
@@ -51,22 +51,18 @@ function nextSequence () {
     gamePattern.push(randomNumber) ;
 
     $("h1").text("level " + level) ;
-    console.log(gamePattern) ;
 
     //showing last random color
     if (gamePattern.length == 1){
         var color = buttonColor[gamePattern[0]] ;
-        console.log(color) ;
         randomColorAnimation (color) ;
         colorSound (color) ;
     } else if (gamePattern.length == 2) {
         var color = buttonColor[gamePattern[1]] ;
-        console.log(color) ;
         randomColorAnimation (color) ;
         colorSound (color) ;
     } else {
         var color = buttonColor[gamePattern[gamePattern.length - 1]] ;
-        console.log(color) ;
         randomColorAnimation (color) ;
         colorSound (color) ;
     }
@@ -81,16 +77,11 @@ function checkAnwser (curentLevel) {
     for (var i = 0 ; i < userChosenColor.length ; i++){
         var randomColor = buttonColor[gamePattern[i]] ;
         var chosenColor = userChosenColor[i] ;
-        console.log(randomColor) ;
-        console.log(chosenColor) ;
 
         if (randomColor == chosenColor) {
-            checkWrong.push("success")
-            console.log ( "success" );
             successTime++ ;
         } else {
-            checkWrong.push("wrong")
-            console.log ( "wrong") ;
+            checkWrong.push("wrong");
         }
     }
 
@@ -122,14 +113,15 @@ function gameOver () {
     var wrongSound = new Audio ("./sounds/wrong.mp3") ;
     wrongSound.play() ;
 
+    //restart game
     $(document).keypress(function (event) {
-        console.log(event.originalEvent.isTrusted) ;
         var checkKey = event.originalEvent.isTrusted ;
 
         if ($("h1").text() == "Game Over , Press Any Key to Restart"){
             if (checkKey == true) {
                 level = 0 ;
                 if (level == 0) {
+                    gamePattern = [] ;
                     nextSequence () ;
                 }else {
                     console.log("game running")
